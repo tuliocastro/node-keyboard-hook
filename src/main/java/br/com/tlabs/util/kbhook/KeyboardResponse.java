@@ -12,7 +12,7 @@ public class KeyboardResponse implements Serializable {
     public boolean shift;
     public boolean alt;
     public boolean ctrl;
-    public boolean fn;
+    public boolean meta;
 
     public KeyboardResponse() {
 

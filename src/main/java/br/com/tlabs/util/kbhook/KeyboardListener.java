@@ -14,6 +14,7 @@ public class KeyboardListener implements NativeKeyListener {
     private boolean isControlPressed;
     private boolean isShiftPressed;
     private boolean isAltPressed;
+    private boolean isMetaPressed;
 
 
     public KeyboardListener(OutputStream output) {
@@ -67,6 +68,10 @@ public class KeyboardListener implements NativeKeyListener {
             case NativeKeyEvent.VC_ALT:
                 isAltPressed = true;
                 return true;
+
+            case NativeKeyEvent.VC_META:
+                isMetaPressed = true;
+                return true;
         }
 
         return false;
@@ -88,6 +93,10 @@ public class KeyboardListener implements NativeKeyListener {
             case NativeKeyEvent.VC_ALT:
                 isAltPressed = false;
                 return true;
+
+            case NativeKeyEvent.VC_META:
+                isMetaPressed = false;
+                return true;
         }
 
         return false;
@@ -102,6 +111,7 @@ public class KeyboardListener implements NativeKeyListener {
             response.shift = isShiftPressed;
             response.ctrl = isControlPressed;
             response.alt = isAltPressed;
+            response.meta = isMetaPressed;
 
             String json = new Gson().toJson(response);
 

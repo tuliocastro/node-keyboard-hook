@@ -1,5 +1,6 @@
 package br.com.tlabs.util.kbhook;
 
+import jdk.nashorn.internal.objects.Global;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -13,6 +14,17 @@ public class Main {
     public static void main(String[] args) throws NativeHookException {
 
         KeyboardListener listener = new KeyboardListener(System.out);
+
+        //TODO Verificar arquivos criados no temporary
+        
+        System.out.println("Listener criado");
+        // Clean up the native hook.
+        try {
+            GlobalScreen.unregisterNativeHook();
+            GlobalScreen.isNativeHookRegistered();
+        } catch (NativeHookException ex) {
+            ex.printStackTrace();
+        }
 
         disableLogs();
 

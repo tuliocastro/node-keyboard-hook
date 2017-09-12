@@ -3,8 +3,7 @@ package br.com.tlabs.util.kbhook;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,20 +12,19 @@ public class Main {
 
     public static void main(String[] args) throws NativeHookException {
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-        GlobalScreen.registerNativeHook();
+        KeyboardListener listener = new KeyboardListener(System.out);
 
         disableLogs();
 
-        KeyboardListener listener = new KeyboardListener(System.out);
+        GlobalScreen.registerNativeHook();
 
         GlobalScreen.addNativeKeyListener(listener);
 
     }
 
-
     private static void disableLogs() {
+
+        System.setOut(null);
 
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);

@@ -2,7 +2,7 @@ var fs = require("fs");
 var path = require("path");
 var spawn = require("child_process").spawn;
 
-var JAR_PATH = path.join(process.cwd(), "java", "dist", "KeyboardHook.jar");
+var JAR_PATH = path.join(__dirname, "../java", "dist", "KeyboardHook.jar");
 
 var processInstance = null;
 

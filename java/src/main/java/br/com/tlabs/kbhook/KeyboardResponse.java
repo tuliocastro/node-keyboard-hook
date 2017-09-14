@@ -10,7 +10,7 @@ public class KeyboardResponse implements Serializable {
     public EventActionEnum action;
     public Integer code;
     public Character key;
-    public String desc;
+    public String name;
     public boolean shift;
     public boolean alt;
     public boolean ctrl;
@@ -26,7 +26,7 @@ public class KeyboardResponse implements Serializable {
         this.action = action;
         this.code = event.getKeyCode();
         this.key = event.getKeyChar();
-        this.desc = NativeKeyEvent.getKeyText(event.getKeyCode());
+        this.name = NativeKeyEvent.getKeyText(event.getKeyCode());
 
     }
 

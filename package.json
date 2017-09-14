@@ -2,7 +2,7 @@
   "name": "native-kb-hook",
   "version": "0.0.1",
   "description": "A Node JS module to help you hook keyboard events.",
-  "main": "main.js",
+  "main": "nkb-hook.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

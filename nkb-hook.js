@@ -1,31 +1,5 @@
-var fs = require("fs");
-var path = require("path");
-var spawn = require("child_process").spawn;
-var Q = require("q");
-
-var JAR_PATH = path.join(__dirname, "java", "dist", "KeyboardHook.jar");
-
-var processHook = null;
-
-function decodeData(arrayBuffer) {
-
-    var decoded = '';
-
-    arrayBuffer.forEach(function (char) {
-        decoded += String.fromCharCode(char);
-    });
-
-    return decoded;
-}
-
-function isJSON(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
+require('./js/utils/import');
+var jar = require('./js/jar.processor');
 
 var callback = {
     onTyped: null,
@@ -39,25 +13,17 @@ var interface = {
 
     start: function () {
 
-        if (!fs.existsSync(JAR_PATH)) {
-            throw new Error("ERR: Can't find keyboard hook at " + JAR_PATH);
-        }
-
-        processHook = spawn("java", ["-jar", JAR_PATH]);
-
-        processHook.stdout.on('data', function (data) {
+        var onData = function (data) {
 
             if (!data.length) {
                 return;
             }
 
-            var decoded = decodeData(data);
-
-            if (!decoded || !isJSON(decoded)) {
+            if (!data || !data.isJSON()) {
                 return;
             }
 
-            var response = JSON.parse(decoded);
+            var response = JSON.parse(data);
 
             switch (response.action) {
 
@@ -88,35 +54,20 @@ var interface = {
                     break;
             }
 
-        });
+        };
 
-        processHook.stderr.on('data', function (data) {
-
-            var decoded = decodeData(data);
-
-            if (callback.onError) {
-                callback.onError(decoded);
-            }
-
-        });
-
-        processHook.on('close', function () {
-
-            if (callback.onClose) {
-                callback.onClose();
-            }
-
-        });
+        jar.start(onData, callback.onError, callback.onClose);
 
         return this;
 
     },
 
     stop: function () {
-        processHook.kill("SIGINT");
-        processHook = null;
+
+        jar.stop();
 
         return this;
+
     },
 
     onTyped: function (fnCallback) {
@@ -141,7 +92,7 @@ var interface = {
     },
 
     onError: function (fnCallback) {
-        
+
         callback.onError = fnCallback;
 
         return this;

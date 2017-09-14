@@ -13,8 +13,5 @@
   ],
   "author": "Tulio Castro <tulioac88@gmail.com> (http://www.tuliocastro.com.br/)",
   "repository": "https://github.com/tuliocastro/node-keyboard-hook",
-  "license": "MIT",
-  "dependencies": {
-    "q": "^1.5.0"
-  }
+  "license": "MIT"
 }

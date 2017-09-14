@@ -1,10 +1,12 @@
-package br.com.tlabs.util.kbhook;
+package br.com.tlabs.kbhook;
 
-import jdk.nashorn.internal.objects.Global;
+import br.com.tlabs.kbhook.util.SystemUtil;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import java.io.PrintStream;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,18 +17,11 @@ public class Main {
 
         KeyboardListener listener = new KeyboardListener(System.out);
 
-        //TODO Verificar arquivos criados no temporary
-        
-        System.out.println("Listener criado");
-        // Clean up the native hook.
-        try {
-            GlobalScreen.unregisterNativeHook();
-            GlobalScreen.isNativeHookRegistered();
-        } catch (NativeHookException ex) {
-            ex.printStackTrace();
-        }
+        clearTemporaryFiles();
 
         disableLogs();
+
+        GlobalScreen.unregisterNativeHook();
 
         GlobalScreen.registerNativeHook();
 
@@ -46,6 +41,28 @@ public class Main {
         for (int i = 0; i < handlers.length; i++) {
             handlers[i].setLevel(Level.OFF);
         }
+
+    }
+
+    private static void clearTemporaryFiles() {
+
+        switch (SystemUtil.getOS()) {
+
+            case WINDOWS:
+                removeTemporaryFiles();
+                break;
+        }
+    }
+
+    private static void removeTemporaryFiles() {
+
+        String tempDir = System.getProperty("java.io.tmpdir");
+
+        FilenameFilter filterNativeHook = (dir, name) -> name.startsWith("JNativeHook-") && name.endsWith(".dll");
+
+        File[] list = new File(tempDir).listFiles(filterNativeHook);
+
+        Arrays.stream(list).forEach(f -> f.delete());
 
     }
 }

@@ -13,5 +13,16 @@ var onTyped = function (typed) {
 
     // console.log(typed);
 }
-var hooker = hook.start().onPressed(onPress).onReleased(onRelease).onTyped(onTyped);
+
+var onClose = function () {
+    console.log('fechado');
+}
+
+var hooker = hook.start().onPressed(onPress).onReleased(onRelease).onTyped(onTyped).onClose(onClose);
+
+setTimeout(function () {
+
+    hooker.stop();
+
+}, 20000);
 

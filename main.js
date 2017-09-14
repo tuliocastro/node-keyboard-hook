@@ -18,11 +18,24 @@ function decodeData(arrayBuffer) {
     return decoded;
 }
 
-var interface = {
+function isJSON(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
-    callbackOnTyped: null,
-    callbackOnReleased: null,
-    callbackOnPressed: null,
+var callback = {
+    onTyped: null,
+    onReleased: null,
+    onPressed: null,
+    onError: null,
+    onClose: null
+};
+
+var interface = {
 
     start: function () {
 
@@ -35,15 +48,12 @@ var interface = {
         processHook.stdout.on('data', function (data) {
 
             if (!data.length) {
-                console.log('saiu no response')
                 return;
             }
 
             var decoded = decodeData(data);
 
-            if (!decoded || decoded.charCodeAt(0) != '{') {
-                console.log(decoded.charCodeAt(0));
-                console.log('saiu no decoded')
+            if (!decoded || !isJSON(decoded)) {
                 return;
             }
 
@@ -53,8 +63,8 @@ var interface = {
 
                 case "RELEASED":
 
-                    if (interface.callbackOnReleased) {
-                        interface.callbackOnReleased(response);
+                    if (callback.onReleased) {
+                        callback.onReleased(response);
                     }
 
                     break;
@@ -62,8 +72,8 @@ var interface = {
 
                 case "PRESSED":
 
-                    if (interface.callbackOnPressed) {
-                        interface.callbackOnPressed(response);
+                    if (callback.onPressed) {
+                        callback.onPressed(response);
                     }
 
                     break;
@@ -71,8 +81,8 @@ var interface = {
 
                 case "TYPED":
 
-                    if (interface.callbackOnTyped) {
-                        interface.callbackOnTyped(response);
+                    if (callback.onTyped) {
+                        callback.onTyped(response);
                     }
 
                     break;
@@ -81,11 +91,21 @@ var interface = {
         });
 
         processHook.stderr.on('data', function (data) {
-            console.log('stderr: ' + data);
+
+            var decoded = decodeData(data);
+
+            if (callback.onError) {
+                callback.onError(decoded);
+            }
+
         });
 
-        processHook.on('close', function (code) {
-            console.log('child process exited with code: ' + code);
+        processHook.on('close', function () {
+
+            if (callback.onClose) {
+                callback.onClose();
+            }
+
         });
 
         return this;
@@ -99,23 +119,37 @@ var interface = {
         return this;
     },
 
-    onTyped: function (callback) {
+    onTyped: function (fnCallback) {
 
-        interface.callbackOnTyped = callback;
-
-        return this;
-    },
-
-    onReleased: function (callback) {
-
-        interface.callbackOnReleased = callback;
+        callback.onTyped = fnCallback;
 
         return this;
     },
 
-    onPressed: function (callback) {
+    onReleased: function (fnCallback) {
 
-        interface.callbackOnPressed = callback;
+        callback.onReleased = fnCallback;
+
+        return this;
+    },
+
+    onPressed: function (fnCallback) {
+
+        callback.onPressed = fnCallback;
+
+        return this;
+    },
+
+    onError: function (fnCallback) {
+        
+        callback.onError = fnCallback;
+
+        return this;
+    },
+
+    onClose: function (fnCallback) {
+
+        callback.onClose = fnCallback;
 
         return this;
     }

@@ -1,15 +1,10 @@
-package br.com.tlabs.util.kbhook;
+package br.com.tlabs.kbhook;
 
 import com.google.gson.Gson;
-import javafx.print.Printer;
-import org.jnativehook.GlobalScreen;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 import java.io.*;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class KeyboardListener implements NativeKeyListener {
 

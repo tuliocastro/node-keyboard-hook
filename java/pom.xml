@@ -69,7 +69,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>br.com.tlabs.util.kbhook.Main</mainClass>
+                            <mainClass>br.com.tlabs.kbhook.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

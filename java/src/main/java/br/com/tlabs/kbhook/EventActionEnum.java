@@ -1,4 +1,4 @@
-package br.com.tlabs.util.kbhook;
+package br.com.tlabs.kbhook;
 
 public enum EventActionEnum {
 

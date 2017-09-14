@@ -28,7 +28,6 @@ public class KeyboardResponse implements Serializable {
         this.key = event.getKeyChar();
         this.desc = NativeKeyEvent.getKeyText(event.getKeyCode());
 
-        System.out.println(event);
     }
 
 }

@@ -9,7 +9,7 @@ This Module help you to listen for Keyboard Actions natively. It uses a Java Mod
 
 ## Examples
 
-[Examples](https://github.com/tuliocastro/node-keyboard-hook/examples): All the examples are available at 'examples' folder.
+[Examples](examples): All the examples are available at 'examples' folder.
 
 ### On Key Pressed
 

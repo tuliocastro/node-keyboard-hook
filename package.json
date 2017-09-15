@@ -1,6 +1,6 @@
 {
   "name": "native-kb-hook",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Node JS module to help you hook keyboard events.",
   "main": "nkb-hook.js",
   "scripts": {

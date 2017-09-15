@@ -4,7 +4,6 @@
 .idea
 .idea/
 /lib
-/logs
 /target
 /tmp
 bower_components/

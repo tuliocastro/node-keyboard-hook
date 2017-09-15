@@ -10,7 +10,7 @@ This Module help you to listen for Keyboard Actions natively. It uses a Java Mod
 
 [Examples](examples): All the examples are available at 'examples' folder.
 
-    var hook = require('../nkb-hook.js');
+    var hook = require('../nkbhook.js');
     
     var onPressed = function (pressed) {
     

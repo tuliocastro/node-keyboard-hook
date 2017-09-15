@@ -1,8 +1,8 @@
-var hook = require('../nkb-hook.js');
+var hook = require('../nkbhook.js');
 
 var onPressed = function (pressed) {
 
-    console.log('You pressed ' + pressed.desc + "(" + pressed.code + ")");
+    console.log('You pressed ' + pressed.name + "(" + pressed.code + ")");
 
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "native-kb-hook",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Node JS module to help you hook keyboard events.",
   "main": "nkb-hook.js",
   "scripts": {
@@ -13,8 +13,5 @@
   ],
   "author": "Tulio Castro <tulioac88@gmail.com> (http://www.tuliocastro.com.br/)",
   "repository": "https://github.com/tuliocastro/node-keyboard-hook",
-  "license": "MIT",
-  "dependencies": {
-    "q": "^1.5.0"
-  }
+  "license": "MIT"
 }

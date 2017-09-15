@@ -7,7 +7,6 @@
 /logs
 /target
 /tmp
-/dist
 bower_components/
 build/
 node_modules/
